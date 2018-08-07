@@ -71,7 +71,7 @@
       "metadata": {
         "description": "The size of the RDSH VMs"
       },
-      "defaultValue": "Standard_A4"
+      "defaultValue": "Standard_D2s_v3"
     },
     "location": {
       "type": "string",
@@ -83,7 +83,7 @@
   },
   "variables": {
     "adAssetLocation": "https://raw.githubusercontent.com/Chronos74/test-rds/master/AzureResourceGroup1",
-    "adVMSize": "Standard_A1",
+    "adVMSize": "Standard_A1_v2",
     "adVnetName": "[concat('ADVNET',resourceGroup().name)]",
     "adSubnetName": "[concat('ADStaticSubnet',resourceGroup().name)]",
     "staticSubnetID": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('adVnetName'), variables('adSubnetName'))]",
@@ -121,9 +121,9 @@
     "uniqueStorageAccountContainerName": "[tolower(concat('sc', uniqueString(resourceGroup().id)))]",
     "imagePublisher": "MicrosoftWindowsServer",
     "imageOffer": "WindowsServer",
-    "vnetAddressRange": "10.0.0.0/16",
-    "subnetAddressRange": "10.0.0.0/24",
-    "dnsServerPrivateIp": "10.0.0.4",
+    "vnetAddressRange": "10.60.0.0/16",
+    "subnetAddressRange": "10.60.0.0/24",
+    "dnsServerPrivateIp": "10.60.0.4",
     "subnet-id": "[concat(resourceId('Microsoft.Network/virtualNetworks', variables('adVnetName')),'/subnets/', variables('adSubnetName'))]",
     "assetLocation": "https://raw.githubusercontent.com/Chronos74/test-rds/master/AzureResourceGroup1",
     "nsgName": "RDSNsg",
@@ -610,7 +610,7 @@
       ],
       "properties": {
         "hardwareProfile": {
-          "vmSize": "Standard_A2"
+          "vmSize": "Standard_A2_v2"
         },
         "availabilitySet": {
           "id": "[resourceId('Microsoft.Compute/availabilitySets', 'gw-availabilityset')]"
@@ -630,7 +630,7 @@
           "osDisk": {
             "name": "osdisk",
             "vhd": {
-              "uri": "[concat(reference(concat('Microsoft.Storage/storageAccounts/', variables('storageAccountName')),'2016-01-01').primaryEndpoints.blob,variables('uniqueStorageAccountContainerName'),'/','gw-vm-os-disk.vhd')]"
+              "uri": "[concat(reference(concat('Microsoft.Storage/storageAccounts/', variables('storageAccountName')),'2016-01-01').primaryEndpoints.blob,variables('uniqueStorageAccountContainerName'),'/','rmon-gw1-os-disk.vhd')]"
             },
             "caching": "ReadWrite",
             "createOption": "FromImage"
@@ -651,7 +651,7 @@
           "name": "rmon-gw1/gateway",
           "location": "[parameters('location')]",
           "dependsOn": [
-            "[resourceId('Microsoft.Compute/virtualMachines', 'gw-vm')]"
+            "[resourceId('Microsoft.Compute/virtualMachines', 'rmon-gw1')]"
           ],
           "properties": {
             "publisher": "Microsoft.Powershell",
@@ -775,7 +775,7 @@
       ],
       "properties": {
         "hardwareProfile": {
-          "vmSize": "Standard_A2"
+          "vmSize": "Standard_A2_v2"
         },
         "availabilitySet": {
           "id": "[resourceId('Microsoft.Compute/availabilitySets', 'cb-availabilityset')]"
@@ -795,7 +795,7 @@
           "osDisk": {
             "name": "osdisk",
             "vhd": {
-              "uri": "[concat(reference(concat('Microsoft.Storage/storageAccounts/', variables('storageAccountName')),'2016-01-01').primaryEndpoints.blob,variables('uniqueStorageAccountContainerName'),'/','cb-vm-os-disk.vhd')]"
+              "uri": "[concat(reference(concat('Microsoft.Storage/storageAccounts/', variables('storageAccountName')),'2016-01-01').primaryEndpoints.blob,variables('uniqueStorageAccountContainerName'),'/','rmon-cb1-os-disk.vhd')]"
             },
             "caching": "ReadWrite",
             "createOption": "FromImage"
@@ -816,7 +816,7 @@
       "apiVersion": "2015-06-15",
       "location": "[parameters('location')]",
       "dependsOn": [
-        "[resourceId('Microsoft.Compute/virtualMachines', 'cb-vm')]",
+        "[resourceId('Microsoft.Compute/virtualMachines', 'rmon-cb1')]",
         "Microsoft.Compute/virtualMachines/gw-vm/extensions/gateway",
         "rdsh-vm-loop"
       ],
