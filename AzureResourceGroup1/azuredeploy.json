@@ -82,7 +82,7 @@
     }
   },
   "variables": {
-    "adAssetLocation": "https://raw.githubusercontent.com/Chronos74/test-rds/master/AzureResourceGroup1",
+    "adAssetLocation": "https://raw.githubusercontent.com/Chronos74/AzureStack-QuickStart-Templates/master/ad-non-ha",
     "adVMSize": "Standard_A1_v2",
     "adVnetName": "[concat('ADVNET',resourceGroup().name)]",
     "adSubnetName": "[concat('ADStaticSubnet',resourceGroup().name)]",
